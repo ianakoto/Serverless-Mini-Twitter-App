@@ -65,7 +65,7 @@ resources:
               MaxAge: 3000    
     
     SendUploadNotificationsPermission:
-      Type: AWS:Lambda::Permission
+      Type: AWS::Lambda::Permission
       Properties:
         FunctionName: !Ref SendUploadNotificationsLambdaFunction
         Principal: s3.amazonaws.com
