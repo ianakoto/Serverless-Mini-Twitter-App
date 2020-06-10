@@ -118,4 +118,28 @@ async deleteUserTweet(userId:string, todoId: string) {
 
 
 
+
+
+async generateUserUploadUrl(userId:string, todoId: string, attachmentId: string) {
+
+    const url= this.s3.getSignedUrl('putObject',{
+            Bucket: this.bucketName,
+            Key: attachmentId,
+            Expires: this.urlExpiration
+          })
+
+    logger.info(`signed url:,${url}`);
+
+    const imageUrl = `https://${this.bucketName}.s3.amazonaws.com/${attachmentId}`
+
+    logger.info(`Attempting to Updating attachmentUrl: ${imageUrl} with attachmentID:${attachmentId} on todoId:${todoId} and userId::${userId} `)
+
+    return url
+
+
+    }
+
+
+
+
 }
