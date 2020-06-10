@@ -34,6 +34,94 @@ functions:
           method: get
           path: hello
 
+  AddTweetComment:
+    handler: src/lambda/http/addTweetComment.handler
+    events:
+    - http:
+        path: tweets/{tweetId}
+        method: post
+        cors: true
+    
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
+
+  CreateUserTweet:
+    handler: src/lambda/http/createUserTweet.handler 
+    events:
+      - http:
+          path: tweets
+          method: post
+          cors: true
+    
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
+       
+  DeleteUserTweet:
+    handler: src/lambda/http/deleteUserTweet.handler 
+    events:
+      - http:
+          path: tweets/{tweetId}
+          method: post
+          cors: true
+    
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:DeleteItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
+                       
+  GenerateUserUploadUrl:
+    handler: src/lambda/http/generateUserUploadUrl.handler  
+    events:
+      - http:
+          path: tweets/{tweetId}/attachment
+          method: post
+          cors: true
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - s3:PutObject
+        Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*
+
+  GetUserTweet:
+    handler: src/lambda/http/getUserTweet.handler 
+    events:
+      - http:
+          path: tweets
+          method: get
+          cors: true
+    
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:Query
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
+      - Effect: Allow
+        Action:
+          - s3:GetObject
+        Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*     
+  
+  UpdateUserTweet:
+    handler: src/lambda/http/updateUserTweet.handler
+    events:
+    - http:
+        path: tweets/{tweetId}
+        method: post
+        cors: true
+    
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:UpdateItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
+
+
 
 
 
