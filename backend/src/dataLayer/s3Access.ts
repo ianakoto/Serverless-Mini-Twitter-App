@@ -1,10 +1,6 @@
 import * as AWSXRay from 'aws-xray-sdk'
 import { createLogger } from '../utils/logger'
 import * as AWS from 'aws-sdk'
-import { DocumentClient } from 'aws-sdk/clients/dynamodb'
-import { TweetItem } from '../models/TweetItem'
-import { UpdateTweet } from '../models/UpdateTweet'
-import { CommentUpdate } from '../models/CommentUpdate'
 
 const logger = createLogger('createTodo')
 
@@ -23,5 +19,22 @@ export class S3Access {
 
 
 
-        
+    async generateUserUploadUrl(userId:string, todoId: string, attachmentId: string) {
+
+        const url= this.s3.getSignedUrl('putObject',{
+                Bucket: this.bucketName,
+                Key: attachmentId,
+                Expires: this.urlExpiration
+                })
+    
+        logger.info(`signed url:,${url}`);
+    
+        const imageUrl = `https://${this.bucketName}.s3.amazonaws.com/${attachmentId}`
+    
+        logger.info(`Attempting to Updating attachmentUrl: ${imageUrl} with attachmentID:${attachmentId} on todoId:${todoId} and userId::${userId} `)
+    
+        return url
+    
+    
+        }
 }

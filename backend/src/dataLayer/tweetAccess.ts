@@ -14,11 +14,8 @@ export class TweetAccess {
 
     constructor(
         private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
-        private readonly  s3 = new XAWS.S3({ signatureVersion: 'v4'}),
         private readonly tweetTable = process.env.TWEET_TABLE,
         private readonly tweetTableIndex = process.env.TWEET_ID_INDEX,
-        private readonly bucketName = process.env.IMAGES_S3_BUCKET,
-        private readonly urlExpiration = process.env.SIGNED_URL_EXPIRATION
 
         ) {}
 
@@ -120,24 +117,8 @@ async deleteUserTweet(userId:string, todoId: string) {
 
 
 
-async generateUserUploadUrl(userId:string, todoId: string, attachmentId: string) {
-
-    const url= this.s3.getSignedUrl('putObject',{
-            Bucket: this.bucketName,
-            Key: attachmentId,
-            Expires: this.urlExpiration
-          })
-
-    logger.info(`signed url:,${url}`);
-
-    const imageUrl = `https://${this.bucketName}.s3.amazonaws.com/${attachmentId}`
-
-    logger.info(`Attempting to Updating attachmentUrl: ${imageUrl} with attachmentID:${attachmentId} on todoId:${todoId} and userId::${userId} `)
-
-    return url
 
 
-    }
 
 
 
