@@ -27,9 +27,7 @@ provider:
     SIGNED_URL_EXPIRATION: 300
 
 functions:
-  
-  SendUploadNotifications:
-    handler: src/lambda/s3/sendUploadNotifications.handler
+
 
   AddTweetComment:
     handler: src/lambda/http/addTweetComment.handler
@@ -130,10 +128,6 @@ resources:
       Type: AWS::S3::Bucket
       Properties:
         BucketName: ${self:provider.environment.IMAGES_S3_BUCKET}
-        NotificationConfiguration:
-          LambdaConfigurations:
-          - Event: s3:ObjectCreated:*
-            Function: !GetAtt SendUploadNotificationsLambdaFunction.Arn
         CorsConfiguration:
           CorsRules:
             -
@@ -149,14 +143,6 @@ resources:
                 - HEAD 
               MaxAge: 3000    
     
-    SendUploadNotificationsPermission:
-      Type: AWS::Lambda::Permission
-      Properties:
-        FunctionName: !Ref SendUploadNotificationsLambdaFunction
-        Principal: s3.amazonaws.com
-        Action: lambda:InvokeFunction
-        SourceAccount: !Ref AWS::AccountId
-        SourceArn: arn:aws:s3:::${self:provider.environment.IMAGES_S#_BUCKET}
 
     BucketPolicy:
       Type: AWS::S3::BucketPolicy

@@ -114,6 +114,29 @@ async deleteUserTweet(userId:string, todoId: string) {
 
 
 
+async uploadImageUrl(imageUrl,userId,tweetId) {
+
+    const params ={
+        TableName: this.tweetTable,
+        Key: {
+            "userId": userId,
+            "tweetId": tweetId
+        },
+        UpdateExpression: "set attachmentUrl = :attachmentUrl",
+        ExpressionAttributeValues: {
+            ":attachmentUrl": imageUrl
+        },
+        ReturnValues:"UPDATED_NEW"
+    }
+     await this.docClient.update(params, function(err, data) {
+        if (err) {
+          logger.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+        } else {
+          logger.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+        }
+    })
+}
+
 
 
 
