@@ -22,6 +22,27 @@ export class TweetAccess {
         ) {}
 
 
+    async getUserTweets(userId: String): Promise<TweetItem[]> {
+        const result =  await this.docClient.query({
+            TableName: this.tweetTable,
+            IndexName: this.tweetTableIndex,
+            KeyConditionExpression: ' userId = :userId',
+            ExpressionAttributeValues: {
+                ':userId': userId
+            }
+            }).promise()
+        logger.info(`tweet results: ${result.Items}`)
+    
+        return result.Items as TweetItem[]
+}      
+
+
+
+
+
+
+
+
 
 
 }
