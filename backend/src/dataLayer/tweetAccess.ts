@@ -99,6 +99,21 @@ async addTweetComments (userId:string, tweetId: string, comment: CommentUpdate) 
 
 }
 
+async deleteUserTweet(userId:string, todoId: string) {
+    var params = {
+        TableName: this.tweetTable,
+        Key:{
+          "userId": userId,
+          "todoId": todoId
+        }
+    };
+    
+      logger.info("Attempting a conditional delete...");
+    
+      const deleteItem = this.docClient.delete(params).promise()
+    
+      return deleteItem
+}
 
 
 
