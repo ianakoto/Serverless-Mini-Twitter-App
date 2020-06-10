@@ -35,6 +35,16 @@ export class S3Access {
     
         return url
     
-    
         }
+
+
+    async  SendUploadNotifications(key:string) {
+
+        logger.info(`Processing S3 item with key: ${key} . `)
+    
+
+    }
+
+
+
 }
