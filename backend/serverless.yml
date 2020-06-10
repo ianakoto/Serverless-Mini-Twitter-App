@@ -27,12 +27,9 @@ provider:
     SIGNED_URL_EXPIRATION: 300
 
 functions:
-  hello:
-    handler: handler.hello
-    events:
-      - http:
-          method: get
-          path: hello
+  
+  SendUploadNotifications:
+    handler: src/lambda/s3/sendUploadNotifications.handler
 
   AddTweetComment:
     handler: src/lambda/http/addTweetComment.handler
