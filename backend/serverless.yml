@@ -2,10 +2,7 @@ service:
   name: mini-twitter-app
 
 
-custom:
-  webpack:
-    webpackConfig: ./webpack.config.js
-    includeModules: true
+
 
 plugins:
   - serverless-webpack
@@ -25,6 +22,26 @@ provider:
     TWEET_ID_INDEX: TweetIdIndex
     IMAGES_S3_BUCKET: serverless-tweet-images-4tf129ytre0764-${self:provider.stage}
     SIGNED_URL_EXPIRATION: 300
+
+
+custom:
+  documentation:
+    api:
+      info:
+        version: 'v1.0.0'
+        title: Mini Twitter API
+        description: A Mini Twitter Serverless application       
+    models:
+      - name: CreateTweetRequest
+        contentType: "application/json"   
+        schema: ${file(./../backend/src/models/create-tweet-request.json)}
+    
+
+
+
+
+
+
 
 functions:
 
@@ -50,7 +67,13 @@ functions:
           path: tweets
           method: post
           cors: true
-    
+          reqValidatorName: 'xMyRequestValidator'
+          documentation:
+            summary: Create a new  tweet
+            description: create tweets
+            requestModels:
+              'application/json': CreateTweetRequest
+
     iamRoleStatements:
       - Effect: Allow
         Action:

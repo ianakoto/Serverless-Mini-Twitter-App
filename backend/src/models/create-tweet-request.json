@@ -1,0 +1,13 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "tweet",
+    "type":"object",
+    "properties": {
+        "comment": { "type":"string" }
+    },
+    "required":[
+        "comment"
+    ],
+    "additionalProperties": false
+
+}

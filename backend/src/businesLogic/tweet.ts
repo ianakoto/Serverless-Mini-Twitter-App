@@ -20,7 +20,7 @@ export async function getUserTweet(event:APIGatewayProxyEvent): Promise<TweetIte
 
 export async function createUserTweet(event:APIGatewayProxyEvent): Promise<TweetItem> {
 
-    const newTweet: CreateTweetRequest = JSON.parse(event.body)
+    const comment: CreateTweetRequest = JSON.parse(event.body)
     const tweetId = uuid.v4();
     const userId = getUserId(event);
     const createdAt= new Date().toISOString()
@@ -29,7 +29,7 @@ export async function createUserTweet(event:APIGatewayProxyEvent): Promise<Tweet
         userId: userId,
         tweetId: tweetId,
         createdAt:createdAt,
-        ...newTweet
+        ...comment
     } as TweetItem
 
     return tweetAccess.createUserTweet(addTweet)
