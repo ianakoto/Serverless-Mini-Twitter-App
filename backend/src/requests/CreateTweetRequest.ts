@@ -1,6 +1,7 @@
-import { CommentUpdate } from "./CommentUpdate";
+import { CommentUpdate } from "../models/CommentUpdate";
 
-export interface TweetItem {
+
+export interface CreateTweetRequest {
     tweetId: string
     userId: string
     createdAt: string
