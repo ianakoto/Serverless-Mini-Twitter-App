@@ -4,6 +4,7 @@ import * as AWS from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { TweetItem } from '../models/TweetItem'
 import { UpdateTweet } from '../models/UpdateTweet'
+import { CommentUpdate } from '../models/CommentUpdate'
 
 const logger = createLogger('createTodo')
 
@@ -75,6 +76,28 @@ async updateTweetLike(userId:string, tweetId: string, addLike: UpdateTweet) {
 }
 
 
+
+async addTweetComments (userId:string, tweetId: string, comment: CommentUpdate) {
+
+    var params = {
+        TableName: this.tweetTable,
+        Key:{
+          "userId": userId,
+          "tweetId": tweetId
+        },
+        UpdateExpression: "add comment =:comment",
+        ExpressionAttributeValues:{
+            ":comment": comment
+        },
+        ReturnValues:"UPDATED_NEW"
+    };
+    
+      logger.info("Attempting a conditional update...")
+      const updateItem = this.docClient.update(params).promise()
+    
+      return updateItem
+
+}
 
 
 
