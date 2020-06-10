@@ -38,6 +38,17 @@ export class TweetAccess {
 
 
 
+async createUserTweet(newTweet: TweetItem): Promise<TweetItem> {
+    console.log('Storing new item: ', newTweet )
+    await this.docClient.put({
+     TableName: this.tweetTable,
+     Item: newTweet
+   }).promise()
+   logger.info('Attempting to create Tweet')
+   return newTweet
+}
+
+
 
 
 
