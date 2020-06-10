@@ -52,6 +52,30 @@ async createUserTweet(newTweet: TweetItem): Promise<TweetItem> {
 
 
 
+async updateTweetLike(userId:string, tweetId: string, addLike: UpdateTweet) {
+
+    var params = {
+        TableName: this.tweetTable,
+        Key:{
+          "userId": userId,
+          "tweetId": tweetId
+        },
+        UpdateExpression: "set like=:like",
+        ExpressionAttributeValues:{
+            ":like":addLike.like
+        },
+        ReturnValues:"UPDATED_NEW"
+    };
+    
+      logger.info("Attempting a conditional update...")
+      const updateItem = this.docClient.update(params).promise()
+    
+      return updateItem
+
+}
+
+
+
 
 
 
