@@ -5,6 +5,7 @@ import { TweetItem } from '../models/TweetItem';
 import { CreateTweetRequest } from '../requests/CreateTweetRequest';
 import { UpdateTweet } from '../models/UpdateTweet';
 import { CommentUpdate } from '../models/CommentUpdate';
+import { RetweetItem } from '../models/RetweetItem';
 
 
 const tweetAccess = new TweetAccess();
@@ -35,6 +36,28 @@ export async function createUserTweet(event:APIGatewayProxyEvent): Promise<Tweet
     return tweetAccess.createUserTweet(addTweet)
 }
 
+
+
+export async function reTweet(event:APIGatewayProxyEvent): Promise<TweetItem> {
+
+    const tweetId = uuid.v4();
+    const userId = getUserId(event);
+    const createdAt= new Date().toISOString()
+
+
+    const reTweetItem: RetweetItem = JSON.parse(event.body)
+
+
+    const addreTweet = {
+        userId: userId,
+        tweetId: tweetId,
+        createdAt:createdAt,
+        ...reTweetItem
+    } as TweetItem
+
+
+    return tweetAccess.reTweet(addreTweet)
+}
 
 
 export async function deleteUserTweet(event: APIGatewayProxyEvent) {

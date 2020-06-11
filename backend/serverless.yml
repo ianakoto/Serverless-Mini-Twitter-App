@@ -60,6 +60,22 @@ functions:
           - dynamodb:UpdateItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
 
+  Retweet:
+    handler: src/lambda/http/reTweet.handler
+    events:
+      - http:
+          path: tweets
+          method: post
+          cors: true
+      
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
+       
+
+       
   CreateUserTweet:
     handler: src/lambda/http/createUserTweet.handler 
     events:
@@ -209,7 +225,7 @@ resources:
         ValidateRequestBody: true
         ValidateRequestParameters: false
 
-    TodosDynamoDBTable:
+    TweetsDynamoDBTable:
       Type: AWS::DynamoDB::Table
       Properties:
         AttributeDefinitions:

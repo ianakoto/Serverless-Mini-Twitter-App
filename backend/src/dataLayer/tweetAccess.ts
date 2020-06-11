@@ -32,7 +32,20 @@ export class TweetAccess {
         logger.info(`tweet results: ${result.Items}`)
     
         return result.Items as TweetItem[]
-}      
+        }  
+
+
+async reTweet(item:TweetItem) {
+    logger.info('Storing retweet item: ', item )
+    await this.docClient.put({
+        TableName: this.tweetTable,
+        Item: item
+    }).promise()
+   logger.info('Attempting to create Tweet')
+   return item
+
+}
+
 
 
 
