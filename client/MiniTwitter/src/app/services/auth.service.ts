@@ -73,7 +73,7 @@ private localAuthSetup() {
   checkAuth$.subscribe();
 }
 
-login(redirectPath: string = '/home') {
+login(redirectPath: string = '/') {
   // A desired redirect path can be passed to login method
   // (e.g., from a route guard)
   // Ensure Auth0 client instance exists
@@ -119,9 +119,10 @@ logout() {
   this.auth0Client$.subscribe((client: Auth0Client) => {
     // Call method to log out
     client.logout({
-      client_id: authConfig.clientId,
-      returnTo: `${window.location.origin}`
+      client_id: authConfig.clientId
     });
+
+
   });
 }
 
