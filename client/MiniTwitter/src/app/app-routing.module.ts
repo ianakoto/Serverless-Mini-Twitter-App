@@ -15,6 +15,10 @@ const routes: Routes = [
     path: 'callback',
     redirectTo: 'home',
     pathMatch: 'full'
+  },
+  {
+    path: 'tweet',
+    loadChildren: () => import('./modal/tweet/tweet.module').then( m => m.TweetPageModule)
   }
 ];
 

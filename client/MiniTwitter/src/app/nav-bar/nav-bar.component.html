@@ -1,4 +1,8 @@
 <ion-header>
-  <ion-button  (click)="auth.login()" *ngIf="!auth.loggedIn" color="primary">Login</ion-button>
-  <ion-button  (click)="auth.logout()" *ngIf="auth.loggedIn" color="primary">Log Out</ion-button>
-</ion-header>
+  <ion-toolbar>
+    <ion-title>Welcome to Mini Twitter</ion-title>
+    <ion-button  (click)="auth.login()" *ngIf="!auth.loggedIn" color="primary">Login</ion-button>
+    <ion-button  (click)="auth.logout()" *ngIf="auth.loggedIn" color="primary">Log Out</ion-button>
+    
+  </ion-toolbar>
+  </ion-header>

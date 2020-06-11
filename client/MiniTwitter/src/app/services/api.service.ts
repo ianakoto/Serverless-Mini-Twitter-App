@@ -113,7 +113,7 @@ export class ApiService {
   }
 
 
-  async  uploadFile(uploadUrl: string, file: Buffer): Promise<void> {
+  async  uploadFile(uploadUrl: string, file: File): Promise<void> {
     await Axios.put(uploadUrl, file);
   }
 

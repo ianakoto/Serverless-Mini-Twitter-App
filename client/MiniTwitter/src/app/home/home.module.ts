@@ -7,6 +7,7 @@ import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
 
 import { NavBarComponent} from '../nav-bar/nav-bar.component';
+import { TweetPage } from '../modal/tweet/tweet.page';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { NavBarComponent} from '../nav-bar/nav-bar.component';
     IonicModule,
     HomePageRoutingModule
   ],
-  declarations: [HomePage, NavBarComponent]
+  declarations: [HomePage, NavBarComponent, TweetPage],
+  entryComponents: [TweetPage]
 })
 export class HomePageModule {}

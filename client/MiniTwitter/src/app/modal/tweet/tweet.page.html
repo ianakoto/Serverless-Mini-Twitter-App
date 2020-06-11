@@ -1,0 +1,19 @@
+
+  <ion-toolbar>
+    <ion-row>
+      <ion-button class="close" color="light" (click)="closeModal()"><ion-icon name="close-sharp"></ion-icon></ion-button>
+      <ion-title>Add Tweet</ion-title>
+    </ion-row>
+  </ion-toolbar>
+
+
+<ion-content>
+
+
+  <ion-input type="file"  accept="image/*" (change)="onFileChange($event)" ></ion-input>
+  
+  <ion-input type="textarea"  (change)="onTextChange($event)" ></ion-input>
+
+
+  <ion-button (click) ="sendTweet()" class="tweet" color="primary">Tweet</ion-button>  
+</ion-content>

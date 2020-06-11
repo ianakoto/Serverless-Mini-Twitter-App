@@ -1,27 +1,7 @@
-#container {
-  text-align: center;
-
+.tweet {
+  margin: 0 auto;
+  bottom:20px;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
+  left: 40%;
+  right: 40%;
 }
