@@ -52,11 +52,11 @@ functions:
   AddTweetComment: 
     handler: src/lambda/https/addTweetComment.handler
     events:
-    - http:
-        path: tweets/{tweetId}
-        method: post
-        authorizer: Auth
-        cors: true
+      - http:
+          method: post
+          path: tweets/{tweetId}
+          authorizer: Auth
+          cors: true
     
     iamRoleStatements:
       - Effect: Allow
@@ -160,11 +160,11 @@ functions:
   UpdateUserTweet:
     handler: src/lambda/https/updateUserTweet.handler
     events:
-    - http:
-        path: tweets/{tweetId}
-        method: post
-        authorizer: Auth
-        cors: true
+      - http:
+          path: tweets/{tweetId}
+          method: post
+          authorizer: Auth
+          cors: true
     
     iamRoleStatements:
       - Effect: Allow

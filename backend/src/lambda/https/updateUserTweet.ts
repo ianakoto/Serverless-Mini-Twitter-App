@@ -3,8 +3,7 @@ import {  updateUserTweet } from "../../businesLogic/tweet"
 
 
 
-export const handler: 
-        APIGatewayProxyHandler = 
+export const handler: APIGatewayProxyHandler = 
         async (event: APIGatewayProxyEvent): 
         Promise<APIGatewayProxyResult> => {
     
