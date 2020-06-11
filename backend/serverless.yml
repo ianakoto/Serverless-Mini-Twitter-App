@@ -49,8 +49,8 @@ functions:
     handler: src/lambda/auth/auth0Authorizer.handler
 
 
-  AddTweetComment:
-    handler: src/lambda/http/addTweetComment.handler
+  AddTweetComment: 
+    handler: src/lambda/https/addTweetComment.handler
     events:
     - http:
         path: tweets/{tweetId}
@@ -65,7 +65,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
 
   Retweet:
-    handler: src/lambda/http/reTweet.handler
+    handler: src/lambda/https/reTweet.handler
     events:
       - http:
           path: tweets
@@ -82,7 +82,7 @@ functions:
 
        
   CreateUserTweet:
-    handler: src/lambda/http/createUserTweet.handler 
+    handler: src/lambda/https/createUserTweet.handler 
     events:
       - http:
           path: tweets
@@ -103,7 +103,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
        
   DeleteUserTweet:
-    handler: src/lambda/http/deleteUserTweet.handler 
+    handler: src/lambda/https/deleteUserTweet.handler 
     events:
       - http:
           path: tweets/{tweetId}
@@ -118,7 +118,7 @@ functions:
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
                        
   GenerateUserUploadUrl:
-    handler: src/lambda/http/generateUserUploadUrl.handler  
+    handler: src/lambda/https/generateUserUploadUrl.handler  
     events:
       - http:
           path: tweets/{tweetId}/attachment
@@ -139,7 +139,7 @@ functions:
 
 
   GetUserTweet:
-    handler: src/lambda/http/getUserTweet.handler 
+    handler: src/lambda/https/getUserTweet.handler 
     events:
       - http:
           path: tweets
@@ -158,7 +158,7 @@ functions:
         Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*     
   
   UpdateUserTweet:
-    handler: src/lambda/http/updateUserTweet.handler
+    handler: src/lambda/https/updateUserTweet.handler
     events:
     - http:
         path: tweets/{tweetId}

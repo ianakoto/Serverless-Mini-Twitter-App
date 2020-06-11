@@ -1,6 +1,7 @@
 import {  APIGatewayProxyEvent } from 'aws-lambda';
 import * as uuid from 'uuid';
 import { S3Access } from '../dataLayer/s3Access';
+import { getUserId } from '../auth/utils';
 
 const s3Access = new S3Access();
 
