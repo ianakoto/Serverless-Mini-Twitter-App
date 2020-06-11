@@ -6,6 +6,7 @@ import { CreateTweetRequest } from '../requests/CreateTweetRequest';
 import { UpdateTweet } from '../models/UpdateTweet';
 import { CommentUpdate } from '../models/CommentUpdate';
 import { RetweetItem } from '../models/RetweetItem';
+import { getUserId } from '../auth/utils';
 
 
 const tweetAccess = new TweetAccess();
