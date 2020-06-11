@@ -1,7 +1,6 @@
-import { CommentUpdate } from "./CommentUpdate";
 
 export interface RetweetItem {
-    comment?: Array<CommentUpdate>
+    comment?: string
     tweethandler: string
     attachmentUrl?: string
 }
