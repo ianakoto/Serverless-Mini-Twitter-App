@@ -8,7 +8,9 @@ export const handler:
         async (event: APIGatewayProxyEvent): 
         Promise<APIGatewayProxyResult> => {
     
-    const url = await generateUserUploadUrl(event)
+    const response = await generateUserUploadUrl(event);
+    const url = response.uploadUrl;
+    const imageurl =  response.imageUrl;
     
   
     return {
@@ -17,7 +19,8 @@ export const handler:
         'Access-Control-Allow-Origin': '*'
       },
       body: JSON.stringify({
-        uploadUrl: url
+        uploadUrl: url,
+        imageUrl: imageurl
       })
     }
   

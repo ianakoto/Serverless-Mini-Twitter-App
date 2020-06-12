@@ -60,13 +60,15 @@ export class TweetPage implements OnInit {
 
         this.auth.auth0Client$.subscribe( async client => {
           const idToken = await client.getTokenSilently();
-          const uplodUrl = await this.apiservice.getUploadUrl(idToken, this.imgurl);
-          const url = this.apiservice.uploadFile(uplodUrl, this.imgurl);
+          const response = await this.apiservice.getUploadUrl(idToken, this.imgurl);
+          const uplodUrl = response.uploadUrl;
+          const imageUrl = response.imageUrl;
+          await this.apiservice.uploadFile(uplodUrl, this.imgurl);
 
           const newTweek: CreateTweetRequest = {
             comment: this.comment,
             tweethandler: this.handler,
-            attachmentUrl: uplodUrl
+            attachmentUrl: imageUrl
            };
           this.apiservice.createTweet(idToken, newTweek);
         });

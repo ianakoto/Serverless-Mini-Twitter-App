@@ -7,6 +7,13 @@ import { UpdateTweet } from '../type/UpdateTweet';
 import { CommentUpdate } from '../type/CommentUpdate';
 
 
+
+export interface ImgResponse {
+  uploadUrl: string;
+  imageUrl: string;
+}
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -102,14 +109,14 @@ export class ApiService {
   async  getUploadUrl(
     idToken: string,
     tweetId: string
-  ): Promise<string> {
+  ): Promise<ImgResponse> {
     const response = await Axios.post(`${apiEndpoint}/tweets/attachment`, '', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${idToken}`
       }
     });
-    return response.data.uploadUrl;
+    return response.data;
   }
 
 

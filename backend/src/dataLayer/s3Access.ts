@@ -32,9 +32,13 @@ export class S3Access {
         const imageUrl = `https://${this.bucketName}.s3.amazonaws.com/${attachmentId}`
     
         logger.info(`Attempting to Updating attachmentUrl: ${imageUrl} with attachmentID:${attachmentId} on userId::${userId} `)
+        
+        const data = {
+            uploadUrl: url,
+            imageUrl: imageUrl
+        }
     
-    
-        return url
+        return data
     
         }
 
