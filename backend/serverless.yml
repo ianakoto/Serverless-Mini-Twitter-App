@@ -99,7 +99,7 @@ functions:
         Action:
           - dynamodb:PutItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
-       - Effect: Allow
+      - Effect: Allow
         Action:
           - xray:GetSamplingRules
           - xray:GetSamplingTargets
@@ -135,7 +135,7 @@ functions:
         Action:
           - dynamodb:PutItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
-       - Effect: Allow
+      - Effect: Allow
         Action:
           - xray:GetSamplingRules
           - xray:GetSamplingTargets
@@ -166,7 +166,7 @@ functions:
         Action:
           - dynamodb:DeleteItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
-       - Effect: Allow
+      - Effect: Allow
         Action:
           - xray:GetSamplingRules
           - xray:GetSamplingTargets
@@ -237,7 +237,7 @@ functions:
         Action:
           - s3:GetObject
         Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*     
-       - Effect: Allow
+      - Effect: Allow
         Action:
           - xray:GetSamplingRules
           - xray:GetSamplingTargets
