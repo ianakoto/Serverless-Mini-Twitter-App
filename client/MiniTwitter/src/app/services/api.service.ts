@@ -103,7 +103,7 @@ export class ApiService {
     idToken: string,
     tweetId: string
   ): Promise<string> {
-    const response = await Axios.post(`${apiEndpoint}/tweets/${tweetId}/attachment`, '', {
+    const response = await Axios.post(`${apiEndpoint}/tweets/attachment`, '', {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${idToken}`
@@ -113,7 +113,7 @@ export class ApiService {
   }
 
 
-  async  uploadFile(uploadUrl: string, file: File): Promise<void> {
+  async  uploadFile(uploadUrl: string, file: Blob): Promise<void> {
     await Axios.put(uploadUrl, file);
   }
 

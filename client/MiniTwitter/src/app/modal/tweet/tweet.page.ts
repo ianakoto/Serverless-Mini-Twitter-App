@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { CreateTweetRequest } from 'src/app/type/CreateTweetRequest';
 
 
 @Component({
@@ -53,8 +54,28 @@ export class TweetPage implements OnInit {
     if (!this.comment || !this.imgurl) {
       this.presentToast('Failed to send Tweet. Make sure the field are not empty');
     }else{
-      // this.apiservice.createTweet()
-      this.presentToast('Tweet Sent successfully');
+
+
+      try {
+
+        this.auth.auth0Client$.subscribe( async client => {
+          const idToken = await client.getTokenSilently();
+          const uplodUrl = await this.apiservice.getUploadUrl(idToken, this.imgurl);
+          const url = this.apiservice.uploadFile(uplodUrl, this.imgurl);
+
+          const newTweek: CreateTweetRequest = {
+            comment: this.comment,
+            tweethandler: this.handler,
+            attachmentUrl: uplodUrl
+           };
+          this.apiservice.createTweet(idToken, newTweek);
+        });
+
+        this.presentToast('Tweet Sent successfully');
+      } catch (error) {
+        this.presentToast('Failed to send Tweet.');
+      }
+
     }
 
     await this.modalController.dismiss();
