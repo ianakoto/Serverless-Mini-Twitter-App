@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalController, ToastController } from '@ionic/angular';
+import { ApiService } from 'src/app/services/api.service';
+import { AuthService } from 'src/app/services/auth.service';
 
 
 @Component({
@@ -10,10 +12,21 @@ import { ModalController, ToastController } from '@ionic/angular';
 export class TweetPage implements OnInit {
   imgurl;
   comment;
+  user;
+  handler;
   constructor(private modalController: ModalController,
-              public toastController: ToastController) { }
+              public toastController: ToastController,
+              private apiservice: ApiService,
+              public auth: AuthService) { }
 
   ngOnInit() {
+    this.auth.userProfile$.subscribe(data => {
+      console.log(data);
+
+      this.user = data.nickname;
+    });
+    console.log(this.user);
+
   }
 
 
@@ -40,6 +53,7 @@ export class TweetPage implements OnInit {
     if (!this.comment || !this.imgurl) {
       this.presentToast('Failed to send Tweet. Make sure the field are not empty');
     }else{
+      // this.apiservice.createTweet()
       this.presentToast('Tweet Sent successfully');
     }
 
