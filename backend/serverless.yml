@@ -121,7 +121,7 @@ functions:
     handler: src/lambda/https/generateUserUploadUrl.handler  
     events:
       - http:
-          path: tweets/{tweetId}/attachment
+          path: tweets/attachment
           method: post
           authorizer: Auth
           cors: true

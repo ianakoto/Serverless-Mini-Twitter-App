@@ -1,13 +1,12 @@
 // import * as AWSXRay from 'aws-xray-sdk'
 import { createLogger } from '../utils/logger'
 import * as AWS from 'aws-sdk'
-import { TweetAccess } from './tweetAccess'
+
 
 const logger = createLogger('createTodo')
 
 // const XAWS = AWSXRay.captureAWS(AWS)
 
-const tweetAccess = new TweetAccess()
 export class S3Access {
 
     constructor(
@@ -20,7 +19,7 @@ export class S3Access {
 
 
 
-    async generateUserUploadUrl(userId:string, tweetId: string, attachmentId: string) {
+    async generateUserUploadUrl(userId:string, attachmentId: string) {
 
         const url= this.s3.getSignedUrl('putObject',{
                 Bucket: this.bucketName,
@@ -32,12 +31,8 @@ export class S3Access {
     
         const imageUrl = `https://${this.bucketName}.s3.amazonaws.com/${attachmentId}`
     
-        logger.info(`Attempting to Updating attachmentUrl: ${imageUrl} with attachmentID:${attachmentId} on tweetId:${tweetId} and userId::${userId} `)
+        logger.info(`Attempting to Updating attachmentUrl: ${imageUrl} with attachmentID:${attachmentId} on userId::${userId} `)
     
-        await tweetAccess.uploadImageUrl(imageUrl,userId,tweetId)
-
-
-
     
         return url
     
