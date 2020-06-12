@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { ModalController } from '@ionic/angular';
 import { TweetPage } from '../modal/tweet/tweet.page';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-home',
@@ -11,23 +12,31 @@ import { TweetPage } from '../modal/tweet/tweet.page';
 export class HomePage implements OnInit {
 
   handler;
+  data;
   constructor(public auth: AuthService,
+              private apiService: ApiService,
               private modalController: ModalController) {}
 
-  ngOnInit() {
-
+  ionViewDidEnter() {
     if (this.auth.loggedIn) {
       console.log('TTTTTTT');
 
-      this.auth.userProfile$.subscribe(data => {
-        console.log(data);
+      this.auth.auth0Client$.subscribe(async client => {
 
-        this.handler = `@${data.nickname}`;
+        this.handler = `@${(await client.getIdTokenClaims()).nickname}`;
+        const idToken = await (await client.getIdTokenClaims()).sid;
+        this.data =  this.apiService.getTweet(idToken);
+
       });
+
+
     }
+  }
 
 
 
+
+  ngOnInit() {
   }
 
 

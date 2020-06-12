@@ -5,3 +5,28 @@
   left: 40%;
   right: 40%;
 }
+
+
+
+ion-img {
+  height: 150px;
+}
+
+
+ion-item {
+  margin: 40px;
+  --border-width: 0;
+  --inner-border-width: 0;
+
+text-align: center;
+}
+
+
+ion-card {
+  top: 10px;
+  bottom: 50px;
+  width: 40%;
+  height: 90%;
+  margin: 0 auto;
+
+}

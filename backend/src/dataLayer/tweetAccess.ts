@@ -1,4 +1,4 @@
-// import * as AWSXRay from 'aws-xray-sdk'
+import * as AWSXRay from 'aws-xray-sdk'
 import { createLogger } from '../utils/logger'
 import * as AWS from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
@@ -8,12 +8,12 @@ import { CommentUpdate } from '../models/CommentUpdate'
 
 const logger = createLogger('createTodo')
 
-// const XAWS = AWSXRay.captureAWS(AWS)
+const XAWS = AWSXRay.captureAWS(AWS)
 
 export class TweetAccess {
 
     constructor(
-        private readonly docClient: DocumentClient = new AWS.DynamoDB.DocumentClient(),
+        private readonly docClient: DocumentClient = new XAWS.DynamoDB.DocumentClient(),
         private readonly tweetTable = process.env.TWEET_TABLE,
         private readonly tweetTableIndex = process.env.TWEET_ID_INDEX,
 

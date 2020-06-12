@@ -12,6 +12,12 @@ plugins:
 
 
 provider:
+
+  tracing:
+    lambda: true
+    apiGateway: true
+
+
   name: aws
   runtime: nodejs12.x
   stage: ${opt:stage, 'dev'}
@@ -63,6 +69,21 @@ functions:
         Action:
           - dynamodb:UpdateItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
+      - Effect: Allow
+        Action:
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+          - xray:BatchGetTraces
+          - xray:GetServiceGraph
+          - xray:GetTraceGraph
+          - xray:GetTraceSummaries
+          - xray:GetGroups
+          - xray:GetGroup
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
+
 
   Retweet:
     handler: src/lambda/https/reTweet.handler
@@ -78,7 +99,20 @@ functions:
         Action:
           - dynamodb:PutItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
-       
+       - Effect: Allow
+        Action:
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+          - xray:BatchGetTraces
+          - xray:GetServiceGraph
+          - xray:GetTraceGraph
+          - xray:GetTraceSummaries
+          - xray:GetGroups
+          - xray:GetGroup
+          - xray:PutTraceSegments
+        Resource:
+          - "*"      
 
        
   CreateUserTweet:
@@ -101,7 +135,23 @@ functions:
         Action:
           - dynamodb:PutItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
-       
+       - Effect: Allow
+        Action:
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+          - xray:BatchGetTraces
+          - xray:GetServiceGraph
+          - xray:GetTraceGraph
+          - xray:GetTraceSummaries
+          - xray:GetGroups
+          - xray:GetGroup
+          - xray:PutTraceSegments
+        Resource:
+          - "*"   
+        
+
+
   DeleteUserTweet:
     handler: src/lambda/https/deleteUserTweet.handler 
     events:
@@ -116,7 +166,23 @@ functions:
         Action:
           - dynamodb:DeleteItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
-                       
+       - Effect: Allow
+        Action:
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+          - xray:BatchGetTraces
+          - xray:GetServiceGraph
+          - xray:GetTraceGraph
+          - xray:GetTraceSummaries
+          - xray:GetGroups
+          - xray:GetGroup
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
+        
+
+
   GenerateUserUploadUrl:
     handler: src/lambda/https/generateUserUploadUrl.handler  
     events:
@@ -135,6 +201,21 @@ functions:
         Action:
           - dynamodb:UpdateItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
+      - Effect: Allow
+        Action:
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+          - xray:BatchGetTraces
+          - xray:GetServiceGraph
+          - xray:GetTraceGraph
+          - xray:GetTraceSummaries
+          - xray:GetGroups
+          - xray:GetGroup
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
+
 
 
 
@@ -156,7 +237,23 @@ functions:
         Action:
           - s3:GetObject
         Resource: arn:aws:s3:::${self:provider.environment.IMAGES_S3_BUCKET}/*     
-  
+       - Effect: Allow
+        Action:
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+          - xray:BatchGetTraces
+          - xray:GetServiceGraph
+          - xray:GetTraceGraph
+          - xray:GetTraceSummaries
+          - xray:GetGroups
+          - xray:GetGroup
+          - xray:PutTraceSegments
+        Resource:
+          - "*" 
+
+
+
   UpdateUserTweet:
     handler: src/lambda/https/updateUserTweet.handler
     events:
@@ -171,7 +268,20 @@ functions:
         Action:
           - dynamodb:UpdateItem
         Resource: arn:aws:dynamodb:${self:provider.region}:*:table/${self:provider.environment.TWEET_TABLE}      
-
+      - Effect: Allow
+        Action:
+          - xray:GetSamplingRules
+          - xray:GetSamplingTargets
+          - xray:GetSamplingStatisticSummaries
+          - xray:BatchGetTraces
+          - xray:GetServiceGraph
+          - xray:GetTraceGraph
+          - xray:GetTraceSummaries
+          - xray:GetGroups
+          - xray:GetGroup
+          - xray:PutTraceSegments
+        Resource:
+          - "*"
 
 
 
