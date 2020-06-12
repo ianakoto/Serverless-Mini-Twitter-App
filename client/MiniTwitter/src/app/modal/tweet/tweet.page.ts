@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -10,9 +10,21 @@ import { ModalController } from '@ionic/angular';
 export class TweetPage implements OnInit {
   imgurl;
   comment;
-  constructor(private modalController: ModalController) { }
+  constructor(private modalController: ModalController,
+              public toastController: ToastController) { }
 
   ngOnInit() {
+  }
+
+
+
+  async presentToast(sendMessage: string) {
+    const toast = await this.toastController.create({
+      message: sendMessage,
+      duration: 4000,
+      position: 'top',
+    });
+    toast.present();
   }
 
 
@@ -25,6 +37,12 @@ export class TweetPage implements OnInit {
 
   async sendTweet() {
 
+    if (!this.comment || !this.imgurl) {
+      this.presentToast('Failed to send Tweet. Make sure the field are not empty');
+    }else{
+      this.presentToast('Tweet Sent successfully');
+    }
+
     await this.modalController.dismiss();
   }
 
@@ -32,6 +50,7 @@ export class TweetPage implements OnInit {
 
   onTextChange(event) {
     this.comment = event.target.value;
+    console.log( this.comment);
 
   }
 
@@ -41,7 +60,7 @@ export class TweetPage implements OnInit {
     if (event.target.files && event.target.files.length) {
       const file = event.target.files[0];
       this.imgurl = file;
-
+      console.log(file);
   }
 
   }

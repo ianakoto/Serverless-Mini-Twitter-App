@@ -9,11 +9,16 @@
 
 <ion-content>
 
+  <ion-list>
+    <ion-item>
+      <ion-input type="file"  accept="image/*" (change)="onFileChange($event)" placeholder=" Select an image to upload" ></ion-input>
+    </ion-item>
 
-  <ion-input type="file"  accept="image/*" (change)="onFileChange($event)" ></ion-input>
-  
-  <ion-input type="textarea"  (change)="onTextChange($event)" ></ion-input>
+    <ion-item>
+      <ion-textarea  mode="ios"  (change)="onTextChange($event)"  placeholder="#tweet Tell us Something"></ion-textarea>
+    </ion-item>
+  </ion-list>
 
 
-  <ion-button (click) ="sendTweet()" class="tweet" color="primary">Tweet</ion-button>  
+  <ion-button (click) ="sendTweet()" class="tweet" color="primary">Send</ion-button>  
 </ion-content>
