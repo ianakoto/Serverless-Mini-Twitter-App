@@ -1,5 +1,7 @@
 
 
 export interface CreateTweetRequest {
-    comment?: string
+    comment?: string;
+    tweethandler: string;
+    attachmentUrl?: string;
 }

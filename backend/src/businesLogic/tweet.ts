@@ -22,16 +22,16 @@ export async function getUserTweet(event:APIGatewayProxyEvent): Promise<TweetIte
 
 export async function createUserTweet(event:APIGatewayProxyEvent): Promise<TweetItem> {
 
-    const comment: CreateTweetRequest = JSON.parse(event.body)
+    const requestTweet: CreateTweetRequest = JSON.parse(event.body)
     const tweetId = uuid.v4();
     const userId = getUserId(event);
     const createdAt= new Date().toISOString()
-  
+    console.info('Starting to upload')
     const addTweet = {
         userId: userId,
         tweetId: tweetId,
         createdAt:createdAt,
-        ...comment
+        ...requestTweet
     } as TweetItem
 
     return tweetAccess.createUserTweet(addTweet)

@@ -13,7 +13,6 @@ import { CreateTweetRequest } from 'src/app/type/CreateTweetRequest';
 export class TweetPage implements OnInit {
   imgurl;
   comment;
-  handler;
   constructor(private modalController: ModalController,
               public toastController: ToastController,
               private apiservice: ApiService,
@@ -61,11 +60,12 @@ export class TweetPage implements OnInit {
           const response = await this.apiservice.getUploadUrl(idToken);
           const uplodUrl = response.uploadUrl;
           const imageUrl = response.imageUrl;
+          const handler = `@${await (await data.getIdTokenClaims()).nickname}`;
           await this.apiservice.uploadFile(uplodUrl, this.imgurl);
 
           const newTweek: CreateTweetRequest = {
             comment: this.comment,
-            tweethandler: this.handler,
+            tweethandler: handler,
             attachmentUrl: imageUrl
            };
           this.apiservice.createTweet(idToken, newTweek).then(() => {
