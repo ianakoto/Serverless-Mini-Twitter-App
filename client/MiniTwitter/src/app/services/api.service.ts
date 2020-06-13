@@ -26,7 +26,7 @@ export class ApiService {
   async getTweet(idToken: string): Promise<Tweet[]> {
     console.log('Fetching Tweet');
 
-    const response = await Axios.get(`${apiEndpoint}/tweets`, {
+    const response = await Axios.get(`${apiEndpoint}/tweets/user`, {
       headers: {
         'Content-Type': 'application/json',
          Authorization: `Bearer ${idToken}`
@@ -64,7 +64,7 @@ export class ApiService {
 
 
   async reTweet(idToken: string, reTweet: CreateTweetRequest ): Promise<Tweet> {
-    const response = await Axios.post(`${apiEndpoint}/tweets`,  JSON.stringify(reTweet), {
+    const response = await Axios.post(`${apiEndpoint}/tweets/retweet`,  JSON.stringify(reTweet), {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${idToken}`
@@ -82,7 +82,7 @@ export class ApiService {
     tweetId: string,
     updatedTweet: UpdateTweet
   ): Promise<void> {
-    await Axios.patch(`${apiEndpoint}/tweets/${tweetId}`, JSON.stringify(updatedTweet), {
+    await Axios.patch(`${apiEndpoint}/tweets/patch/${tweetId}`, JSON.stringify(updatedTweet), {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${idToken}`

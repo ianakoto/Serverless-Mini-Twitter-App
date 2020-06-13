@@ -3,10 +3,12 @@
     "title": "tweet",
     "type":"object",
     "properties": {
-        "comment": { "type":"string" }
+        "comment": { "type":"string" }, 
+        "tweethandler": { "type":"string" },
+        "attachmentUrl": { "type":"string" }
     },
     "required":[
-        "comment"
+        "tweethandler"
     ],
     "additionalProperties": false
 

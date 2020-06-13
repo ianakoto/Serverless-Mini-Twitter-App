@@ -89,7 +89,7 @@ functions:
     handler: src/lambda/https/reTweet.handler
     events:
       - http:
-          path: tweets
+          path: tweets/retweet
           method: post
           authorizer: Auth
           cors: true
@@ -223,7 +223,7 @@ functions:
     handler: src/lambda/https/getUserTweet.handler 
     events:
       - http:
-          path: tweets
+          path: tweets/user
           method: get
           authorizer: Auth
           cors: true
@@ -258,7 +258,7 @@ functions:
     handler: src/lambda/https/updateUserTweet.handler
     events:
       - http:
-          path: tweets/{tweetId}
+          path: tweets/patch/{tweetId}
           method: post
           authorizer: Auth
           cors: true
