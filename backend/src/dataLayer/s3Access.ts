@@ -1,9 +1,7 @@
 import * as AWSXRay from 'aws-xray-sdk'
-import { createLogger } from '../utils/logger'
 import * as AWS from 'aws-sdk'
 
 
-const logger = createLogger('createTodo')
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
@@ -24,14 +22,14 @@ export class S3Access {
         const url= this.s3.getSignedUrl('putObject',{
                 Bucket: this.bucketName,
                 Key: attachmentId,
-                Expires: this.urlExpiration
+                Expires: Number(this.urlExpiration)
                 })
     
-        logger.info(`signed url:,${url}`);
+        console.info(`signed url:,${url}`);
     
         const imageUrl = `https://${this.bucketName}.s3.amazonaws.com/${attachmentId}`
     
-        logger.info(`Attempting to Updating attachmentUrl: ${imageUrl} with attachmentID:${attachmentId} on userId::${userId} `)
+        console.info(`Attempting to Updating attachmentUrl: ${imageUrl} with attachmentID:${attachmentId} on userId::${userId} `)
         
         const data = {
             uploadUrl: url,

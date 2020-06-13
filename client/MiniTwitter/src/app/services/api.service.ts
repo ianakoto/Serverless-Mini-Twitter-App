@@ -107,8 +107,7 @@ export class ApiService {
 
 
   async  getUploadUrl(
-    idToken: string,
-    tweetId: string
+    idToken: string
   ): Promise<ImgResponse> {
     const response = await Axios.post(`${apiEndpoint}/tweets/attachment`, '', {
       headers: {

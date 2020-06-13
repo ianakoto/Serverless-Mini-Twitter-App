@@ -1,12 +1,11 @@
 import * as AWSXRay from 'aws-xray-sdk'
-import { createLogger } from '../utils/logger'
 import * as AWS from 'aws-sdk'
 import { DocumentClient } from 'aws-sdk/clients/dynamodb'
 import { TweetItem } from '../models/TweetItem'
 import { UpdateTweet } from '../models/UpdateTweet'
 import { CommentUpdate } from '../models/CommentUpdate'
 
-const logger = createLogger('createTodo')
+
 
 const XAWS = AWSXRay.captureAWS(AWS)
 
@@ -29,7 +28,7 @@ export class TweetAccess {
                 ':userId': userId
             }
             }).promise()
-        logger.info(`tweet results: ${result.Items}`)
+        console.info(`tweet results: ${result.Items}`)
     
         return result.Items as TweetItem[]
     }  
@@ -37,12 +36,12 @@ export class TweetAccess {
 
     async reTweet(item:TweetItem) {
         
-        logger.info('Storing retweet item: ', item )
+        console.info('Storing retweet item: ', item )
         await this.docClient.put({
             TableName: this.tweetTable,
             Item: item
         }).promise()
-        logger.info('Attempting to create Tweet')
+        console.info('Attempting to create Tweet')
         return item
 
     }
@@ -55,7 +54,7 @@ export class TweetAccess {
         await this.docClient.put({
         TableName: this.tweetTable,
         Item: newTweet}).promise()
-        logger.info('Attempting to create Tweet')
+        console.info('Attempting to create Tweet')
         return newTweet
     }
 
@@ -78,7 +77,7 @@ export class TweetAccess {
             ReturnValues:"UPDATED_NEW"
         };
         
-        logger.info("Attempting a conditional update...")
+        console.info("Attempting a conditional update...")
         const updateItem = this.docClient.update(params).promise()
         
         return updateItem
@@ -102,7 +101,7 @@ export class TweetAccess {
             ReturnValues:"UPDATED_NEW"
         };
         
-        logger.info("Attempting a conditional update...")
+        console.info("Attempting a conditional update...")
         const updateItem = this.docClient.update(params).promise()
         
         return updateItem
@@ -120,7 +119,7 @@ export class TweetAccess {
             }
         };
         
-        logger.info("Attempting a conditional delete...");
+        console.info("Attempting a conditional delete...");
         
         const deleteItem = this.docClient.delete(params).promise()
         
@@ -145,9 +144,9 @@ export class TweetAccess {
         }
         await this.docClient.update(params, function(err, data) {
             if (err) {
-            logger.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
+            console.error("Unable to update item. Error JSON:", JSON.stringify(err, null, 2));
             } else {
-            logger.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
+            console.log("UpdateItem succeeded:", JSON.stringify(data, null, 2));
             }
         })
     }

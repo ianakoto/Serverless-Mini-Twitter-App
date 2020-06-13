@@ -13,7 +13,6 @@ import { CreateTweetRequest } from 'src/app/type/CreateTweetRequest';
 export class TweetPage implements OnInit {
   imgurl;
   comment;
-  user;
   handler;
   constructor(private modalController: ModalController,
               public toastController: ToastController,
@@ -21,12 +20,11 @@ export class TweetPage implements OnInit {
               public auth: AuthService) { }
 
   ngOnInit() {
-    this.auth.userProfile$.subscribe(data => {
-      console.log(data);
+    this.auth.auth0Client$.subscribe(async data => {
 
-      this.user = data.nickname;
+      console.log(await (await data.getIdTokenClaims()).__raw);
     });
-    console.log(this.user);
+
 
   }
 
@@ -58,9 +56,9 @@ export class TweetPage implements OnInit {
 
       try {
 
-        this.auth.auth0Client$.subscribe( async client => {
-          const idToken = await client.getTokenSilently();
-          const response = await this.apiservice.getUploadUrl(idToken, this.imgurl);
+        this.auth.auth0Client$.subscribe(async data => {
+          const idToken = await (await data.getIdTokenClaims()).__raw;
+          const response = await this.apiservice.getUploadUrl(idToken);
           const uplodUrl = response.uploadUrl;
           const imageUrl = response.imageUrl;
           await this.apiservice.uploadFile(uplodUrl, this.imgurl);
@@ -70,10 +68,16 @@ export class TweetPage implements OnInit {
             tweethandler: this.handler,
             attachmentUrl: imageUrl
            };
-          this.apiservice.createTweet(idToken, newTweek);
-        });
+          this.apiservice.createTweet(idToken, newTweek).then(() => {
+          this.presentToast('Tweet Sent successfully');
+          });
 
-        this.presentToast('Tweet Sent successfully');
+         });
+
+
+
+
+
       } catch (error) {
         this.presentToast('Failed to send Tweet.');
       }
