@@ -3,6 +3,7 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CreateTweetRequest } from 'src/app/type/CreateTweetRequest';
+import { TweetsService } from 'src/app/services/tweets.service';
 
 
 @Component({
@@ -16,13 +17,17 @@ export class TweetPage implements OnInit {
   constructor(private modalController: ModalController,
               public toastController: ToastController,
               private apiservice: ApiService,
+              private tweetService: TweetsService,
               public auth: AuthService) { }
 
-  ngOnInit() {
+ async ngOnInit() {
     this.auth.auth0Client$.subscribe(async data => {
 
       console.log(await (await data.getIdTokenClaims()).__raw);
     });
+
+    this.tweetService.getTweet();
+
 
 
   }

@@ -38,6 +38,8 @@ private userProfileSubject$ = new BehaviorSubject<any>(null);
 userProfile$ = this.userProfileSubject$.asObservable();
 // Create a local property for login status
 loggedIn: boolean = null;
+// local property for idtoken
+
 
 constructor(private router: Router) {
   // On initial load, check authentication state with authorization server
@@ -78,13 +80,20 @@ login(redirectPath: string = '/') {
   // (e.g., from a route guard)
   // Ensure Auth0 client instance exists
   this.auth0Client$.subscribe((client: Auth0Client) => {
+
+
     // Call method to log in
     client.loginWithRedirect({
       redirect_uri: authConfig.callbackUrl,
       appState: { target: redirectPath }
     });
+
+
   });
 }
+
+
+
 
 private handleAuthCallback() {
   // Call when app reloads after user logs in with Auth0
@@ -110,13 +119,17 @@ private handleAuthCallback() {
     authComplete$.subscribe(([user, loggedIn]) => {
       // Redirect to target route after callback processing
       this.router.navigate([targetRoute]);
+
+
     });
+
   }
 }
 
 logout() {
   // Ensure Auth0 client instance exists
   this.auth0Client$.subscribe((client: Auth0Client) => {
+
     // Call method to log out
     client.logout({
       client_id: authConfig.clientId

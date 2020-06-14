@@ -3,6 +3,9 @@ import { AuthService } from '../services/auth.service';
 import { ModalController } from '@ionic/angular';
 import { TweetPage } from '../modal/tweet/tweet.page';
 import { ApiService } from '../services/api.service';
+import { Observable } from 'rxjs';
+import { Tweet } from '../type/Tweet';
+import { TweetsService } from '../services/tweets.service';
 
 @Component({
   selector: 'app-home',
@@ -12,33 +15,25 @@ import { ApiService } from '../services/api.service';
 export class HomePage implements OnInit {
 
   handler;
-  data;
+  data$;
+  isAuthenticated$;
   constructor(public auth: AuthService,
-              private apiService: ApiService,
+              private tweetService: TweetsService,
               private modalController: ModalController) {}
 
-  ionViewDidEnter() {
-    if (this.auth.loggedIn) {
-      console.log('TTTTTTT');
+  async ionViewDidEnter() {
 
-      this.auth.auth0Client$.subscribe(async client => {
+  // await this.getTweet(this.isAuthenticated$);
 
-        this.handler = `@${(await client.getIdTokenClaims()).nickname}`;
-        const idToken = await (await client.getIdTokenClaims()).sid;
-        this.data =  this.apiService.getTweet(idToken);
-
-      });
-
-
-    }
   }
 
 
 
 
   ngOnInit() {
-  }
+    this.tweetService.getTweet();
 
+  }
 
 
 
