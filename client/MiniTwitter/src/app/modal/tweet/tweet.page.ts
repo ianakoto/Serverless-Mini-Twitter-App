@@ -17,7 +17,6 @@ export class TweetPage implements OnInit {
   constructor(private modalController: ModalController,
               public toastController: ToastController,
               private apiservice: ApiService,
-              private tweetService: TweetsService,
               public auth: AuthService) { }
 
  async ngOnInit() {
@@ -26,7 +25,6 @@ export class TweetPage implements OnInit {
       console.log(await (await data.getIdTokenClaims()).__raw);
     });
 
-    this.tweetService.getTweet();
 
 
 

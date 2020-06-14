@@ -9,18 +9,38 @@
 
 
 ion-img {
-  height: 150px;
+  height: 350px;
+  margin: 0;
 }
 
 
 ion-item {
   margin: 40px;
-  --border-width: 0;
-  --inner-border-width: 0;
-
-text-align: center;
+  text-align: center;
 }
 
+ion-icon {
+width: 30px;
+height: 30px;
+color: grey;
+}
+
+.twtItem {
+  text-align: center;
+  --background:white;
+ margin-left: auto;
+ margin-right: auto ;
+ margin-bottom: 15px;
+
+}
+
+
+
+.twet {
+  text-align: center;
+  font-size: x-large;
+  margin: 30px;
+}
 
 ion-card {
   top: 10px;

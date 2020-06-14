@@ -16,14 +16,13 @@ export class HomePage implements OnInit {
 
   handler;
   data$;
-  isAuthenticated$;
   constructor(public auth: AuthService,
-              private tweetService: TweetsService,
-              private modalController: ModalController) {}
+              private modalController: ModalController,
+              private apiservice: ApiService) {}
 
   async ionViewDidEnter() {
 
-  // await this.getTweet(this.isAuthenticated$);
+
 
   }
 
@@ -31,11 +30,28 @@ export class HomePage implements OnInit {
 
 
   ngOnInit() {
-    this.tweetService.getTweet();
+    this.getTweet();
 
   }
 
 
+
+  getTweet() {
+    this.auth.auth0Client$.subscribe (async client => {
+      let data;
+      const isauth = await client.isAuthenticated();
+      console.log('is auth: ', isauth);
+      if (isauth ) {
+        const idtoken = await (await client.getIdTokenClaims()).__raw;
+        const Token =  await (await client.getIdTokenClaims()).__raw;
+        console.log(Token);
+        data = await this.apiservice.getTweet(Token);
+        console.log(data);
+        this.data$ = data;
+
+      }
+    });
+   }
 
   async openModal() {
 

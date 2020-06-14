@@ -4,6 +4,6 @@
      
   </ion-toolbar>
 
-  <ion-button  (click)="auth.logout()" color="primary" shape="round">Log Out</ion-button>
+  <ion-button  (click)="auth.logout()" *ngIf="auth.loggedIn" color="primary" shape="round">Log Out</ion-button>
  
   </ion-header>
