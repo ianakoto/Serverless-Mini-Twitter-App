@@ -16,7 +16,11 @@
           <ion-button class="twtItem" (click)="presentCommentAlert(item)" shape="round" >  <ion-icon name="chatbox-outline"></ion-icon> </ion-button> 
           <ion-button class="twtItem" (click)="reTweet(item.tweetId)" shape="round"><ion-icon name="repeat-outline"></ion-icon> </ion-button>
           <ion-button class="twtItem" (click)="addLike(item.tweetId)"   shape="round"><ion-icon name="thumbs-up-outline"></ion-icon> <ion-badge *ngIf="item.like" color="primary">{{item.like}}</ion-badge> </ion-button>
-        
+          
+          <ion-button class="twtItem" (click)="deleteTweet(item.tweetId)"   shape="round"><ion-icon name="trash-sharp"></ion-icon> </ion-button>
+          
+
+          
         </ion-row>
       </ion-grid>
 
