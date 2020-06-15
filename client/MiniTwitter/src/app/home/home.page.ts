@@ -8,6 +8,9 @@ import { Tweet } from '../type/Tweet';
 import { TweetsService } from '../services/tweets.service';
 import { UpdateTweet } from '../type/UpdateTweet';
 import { CreateTweetRequest } from '../type/CreateTweetRequest';
+import { AlertController } from '@ionic/angular';
+import { CommentUpdate } from '../type/CommentUpdate';
+
 
 @Component({
   selector: 'app-home',
@@ -20,7 +23,8 @@ export class HomePage implements OnInit {
   data$;
   constructor(public auth: AuthService,
               private modalController: ModalController,
-              private apiservice: ApiService) {}
+              private apiservice: ApiService,
+              public alertController: AlertController) {}
 
   async ionViewDidEnter() {
 
@@ -55,6 +59,42 @@ export class HomePage implements OnInit {
     });
    }
 
+   async presentCommentAlert(tweetItem: Tweet) {
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Comment',
+      message: 'Add your Comment to this tweet',
+      inputs: [
+        {
+          name: 'comment',
+          type: 'textarea',
+          placeholder: 'Comment goes here'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+          }
+        }, {
+          text: 'Send',
+          handler: (data) => {
+            const comment = data.comment;
+            this.addComment(tweetItem.tweetId, comment, tweetItem.tweethandler);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+
+
+
+
+
   async openModal() {
 
     const modal = await this.modalController.create({
@@ -64,8 +104,19 @@ export class HomePage implements OnInit {
   }
 
 
-  addComment(tweetId) {
+  addComment(tweetId, usercomment, handler) {
+    this.auth.auth0Client$.subscribe (async client => {
 
+      const Token =  await (await client.getIdTokenClaims()).__raw;
+
+      const rcomment: CommentUpdate = {
+        comment: usercomment,
+        tweethandler: handler
+      };
+      await  this.apiservice.addComment(Token, tweetId, rcomment);
+
+
+    });
   }
 
 
@@ -74,7 +125,6 @@ export class HomePage implements OnInit {
     this.auth.auth0Client$.subscribe (async client => {
 
       const Token =  await (await client.getIdTokenClaims()).__raw;
-      console.log(Token);
       const retwet: CreateTweetRequest = {
         comment: tweet.comment,
         tweethandler: tweet.tweethandler,
@@ -92,7 +142,6 @@ export class HomePage implements OnInit {
     this.auth.auth0Client$.subscribe (async client => {
 
       const Token =  await (await client.getIdTokenClaims()).__raw;
-      console.log(Token);
       const update: UpdateTweet = {
         like: 1
       };
