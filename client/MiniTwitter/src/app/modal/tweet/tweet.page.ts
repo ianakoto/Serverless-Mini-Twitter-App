@@ -3,7 +3,6 @@ import { ModalController, ToastController } from '@ionic/angular';
 import { ApiService } from 'src/app/services/api.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CreateTweetRequest } from 'src/app/type/CreateTweetRequest';
-import { TweetsService } from 'src/app/services/tweets.service';
 
 
 @Component({
