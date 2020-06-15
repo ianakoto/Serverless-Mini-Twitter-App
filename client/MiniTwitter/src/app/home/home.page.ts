@@ -137,20 +137,36 @@ export class HomePage implements OnInit {
   }
 
 
-  addLike(tweetId) {
+  addLike(tweetItem: Tweet) {
 
     this.auth.auth0Client$.subscribe (async client => {
 
       const Token =  await (await client.getIdTokenClaims()).__raw;
+      const setLike = tweetItem.like + 1;
       const update: UpdateTweet = {
-        like: 1
+        like: setLike
       };
-      await  this.apiservice.patchTweet(Token, tweetId, update);
+      await  this.apiservice.patchTweet(Token, tweetItem.tweetId, update);
 
 
     });
 
 
+
+  }
+
+
+
+  deleteTweet(tweetId) {
+
+    this.auth.auth0Client$.subscribe (async client => {
+
+      const Token =  await (await client.getIdTokenClaims()).__raw;
+
+      await  this.apiservice.deleteTweet(Token, tweetId);
+
+
+    });
 
   }
 

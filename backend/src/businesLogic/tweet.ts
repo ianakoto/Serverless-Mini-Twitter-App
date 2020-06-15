@@ -31,6 +31,7 @@ export async function createUserTweet(event:APIGatewayProxyEvent): Promise<Tweet
         userId: userId,
         tweetId: tweetId,
         createdAt:createdAt,
+        like:0,
         ...requestTweet
     } as TweetItem
 
