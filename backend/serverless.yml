@@ -59,7 +59,7 @@ functions:
     handler: src/lambda/https/addTweetComment.handler
     events:
       - http:
-          method: post
+          method: patch
           path: tweets/{tweetId}
           authorizer: Auth
           cors: true
@@ -157,7 +157,7 @@ functions:
     events:
       - http:
           path: tweets/{tweetId}
-          method: post
+          method: delete
           authorizer: Auth
           cors: true
     
@@ -264,7 +264,7 @@ functions:
     events:
       - http:
           path: tweets/patch/{tweetId}
-          method: post
+          method: patch
           authorizer: Auth
           cors: true
     

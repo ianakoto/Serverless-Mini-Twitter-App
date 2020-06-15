@@ -82,7 +82,7 @@ export class ApiService {
     tweetId: string,
     updatedTweet: UpdateTweet
   ): Promise<void> {
-    await Axios.post(`${apiEndpoint}/tweets/patch/${tweetId}`, JSON.stringify(updatedTweet), {
+    await Axios.patch(`${apiEndpoint}/tweets/patch/${tweetId}`, JSON.stringify(updatedTweet), {
       headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${idToken}`
