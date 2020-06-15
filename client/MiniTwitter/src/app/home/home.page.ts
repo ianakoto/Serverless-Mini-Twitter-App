@@ -6,6 +6,7 @@ import { ApiService } from '../services/api.service';
 import { Observable } from 'rxjs';
 import { Tweet } from '../type/Tweet';
 import { TweetsService } from '../services/tweets.service';
+import { UpdateTweet } from '../type/UpdateTweet';
 
 @Component({
   selector: 'app-home',
@@ -67,12 +68,26 @@ export class HomePage implements OnInit {
   }
 
 
-  reTweet(tweetId) {
+  reTweet(tweet: Tweet) {
 
   }
 
 
   addLike(tweetId) {
+
+    this.auth.auth0Client$.subscribe (async client => {
+
+      const Token =  await (await client.getIdTokenClaims()).__raw;
+      console.log(Token);
+      const update: UpdateTweet = {
+        like: 1
+      };
+      await  this.apiservice.patchTweet(Token, tweetId, update);
+
+
+    });
+
+
 
   }
 
