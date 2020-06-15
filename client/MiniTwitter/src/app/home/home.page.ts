@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 import { Tweet } from '../type/Tweet';
 import { TweetsService } from '../services/tweets.service';
 import { UpdateTweet } from '../type/UpdateTweet';
+import { CreateTweetRequest } from '../type/CreateTweetRequest';
 
 @Component({
   selector: 'app-home',
@@ -70,6 +71,19 @@ export class HomePage implements OnInit {
 
   reTweet(tweet: Tweet) {
 
+    this.auth.auth0Client$.subscribe (async client => {
+
+      const Token =  await (await client.getIdTokenClaims()).__raw;
+      console.log(Token);
+      const retwet: CreateTweetRequest = {
+        comment: tweet.comment,
+        tweethandler: tweet.tweethandler,
+        attachmentUrl: tweet.attachmentUrl
+      };
+      await  this.apiservice.reTweet(Token, retwet);
+
+
+    });
   }
 
 
