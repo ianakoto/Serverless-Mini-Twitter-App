@@ -1,36 +1,46 @@
 <app-nav-bar></app-nav-bar>
+
 <ion-content>
+  
+<ion-list *ngIf="auth.loggedIn">
+  <ion-item *ngFor="let item of data$">
+    <ion-grid>
 
+      <ion-card-title>{{item.tweethandler}}</ion-card-title> 
+      <ion-card-subtitle>{{item.createdAt}}</ion-card-subtitle>
+      <ion-col>
+        <ion-img src="{{item.attachmentUrl}"></ion-img>
+        <ion-label class="twet">{{item.comment}}</ion-label>
+      </ion-col>
 
-  <ion-list *ngIf="auth.loggedIn">
-    <ion-item *ngFor="let item of data$">
-      <ion-grid>
-
-        <ion-card-title>{{item.tweethandler}} </ion-card-title> 
-        <ion-card-subtitle>{{item.createdAt}}</ion-card-subtitle>
-        <ion-col>
-          <ion-img src="{{item.attachmentUrl}}"></ion-img>
-          <ion-label class="twet">{{item.comment}}</ion-label>
-        </ion-col>
-        <ion-row>
-          <ion-button class="twtItem" (click)="presentCommentAlert(item)" shape="round" >  <ion-icon name="chatbox-outline"></ion-icon> </ion-button> 
-          <ion-button class="twtItem" (click)="reTweet(item)" shape="round"><ion-icon name="repeat-outline"></ion-icon> </ion-button>
-          <ion-button class="twtItem" (click)="addLike(item)"   shape="round"><ion-icon name="thumbs-up-outline"></ion-icon> <ion-badge *ngIf="item.like" color="primary">{{item.like}}</ion-badge> </ion-button>
-          
-          <ion-button class="twtItem" (click)="deleteTweet(item)"   shape="round"><ion-icon name="trash-sharp"></ion-icon> </ion-button>
-          
-
-          
-        </ion-row>
+      <ion-grid *ngIf="item.commentList">
+        <ion-card-header>Comments</ion-card-header>
+        <ion-list class="commentLst">
+          <ion-item *ngFor="let cmt of item.commentList">
+            <ion-col>
+              <ion-title>{{cmt.tweethandler}}</ion-title>
+              <ion-label>{{cmt.createdAt}} </ion-label>
+              <ion-label>{{cmt.comment}}</ion-label>
+            </ion-col>
+          </ion-item>
+        </ion-list>  
       </ion-grid>
+      <ion-row>
+        <ion-button class="twtItem" (click)="presentCommentAlert(item)" shape="round" >  <ion-icon name="chatbox-outline"></ion-icon> </ion-button> 
+        <ion-button class="twtItem" (click)="reTweet(item)" shape="round"><ion-icon name="repeat-outline"></ion-icon> </ion-button>
+        <ion-button class="twtItem" (click)="addLike(item)"   shape="round"><ion-icon name="thumbs-up-outline"></ion-icon> <ion-badge *ngIf="item.like" color="primary">{{item.like}}</ion-badge> </ion-button>
+        
+        <ion-button class="twtItem" (click)="deleteTweet(item)"   shape="round"><ion-icon name="trash-sharp"></ion-icon> </ion-button>
+              
+      </ion-row>
+    </ion-grid>
 
-    </ion-item>
+  </ion-item>
 
-  </ion-list>
+</ion-list>
 
 
-  <ion-fab  vertical="center" horizontal="end"  mode="ios" slot="fixed">
-    <ion-fab-button   (click) ="openModal()" class="tweet" color="primary" shape="round"> <ion-icon class="twticon" name="create-sharp"></ion-icon> </ion-fab-button>
-  </ion-fab>
-
+<ion-fab  vertical="center" horizontal="end"  mode="ios" slot="fixed">
+  <ion-fab-button   (click) ="openModal()" class="tweet" color="primary" shape="round"> <ion-icon class="twticon" name="create-sharp"></ion-icon> </ion-fab-button>
+</ion-fab>
 </ion-content>
