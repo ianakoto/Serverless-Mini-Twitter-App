@@ -132,7 +132,8 @@ logout() {
 
     // Call method to log out
     client.logout({
-      client_id: authConfig.clientId
+      client_id: authConfig.clientId,
+      returnTo: 'http://localhost:3000/welcome'
     });
 
 
