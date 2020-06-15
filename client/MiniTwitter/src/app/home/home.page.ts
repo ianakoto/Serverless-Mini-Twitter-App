@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { ModalController } from '@ionic/angular';
+import { ModalController, ToastController } from '@ionic/angular';
 import { TweetPage } from '../modal/tweet/tweet.page';
 import { ApiService } from '../services/api.service';
 import { Observable } from 'rxjs';
@@ -23,6 +23,7 @@ export class HomePage implements OnInit {
   data$;
   constructor(public auth: AuthService,
               private modalController: ModalController,
+              public toastController: ToastController,
               private apiservice: ApiService,
               public alertController: AlertController) {}
 
@@ -40,6 +41,14 @@ export class HomePage implements OnInit {
 
   }
 
+  async presentToast(sendMessage: string) {
+    const toast = await this.toastController.create({
+      message: sendMessage,
+      duration: 4000,
+      position: 'top',
+    });
+    toast.present();
+  }
 
 
   getTweet() {
@@ -114,7 +123,9 @@ export class HomePage implements OnInit {
         tweethandler: handler,
         createdAt: crtat
       };
-      await  this.apiservice.addComment(Token, tweetId, rcomment);
+      await  this.apiservice.addComment(Token, tweetId, rcomment).then( () => {
+        this.presentToast('Comment added');
+      });
 
 
     });
@@ -132,7 +143,9 @@ export class HomePage implements OnInit {
         tweethandler: twetby,
         attachmentUrl: tweet.attachmentUrl
       };
-      await  this.apiservice.reTweet(Token, retwet);
+      await  this.apiservice.reTweet(Token, retwet).then(() => {
+        this.presentToast('item retweet complete');
+      } );
 
 
     });
@@ -167,7 +180,9 @@ export class HomePage implements OnInit {
 
       const Token =  await (await client.getIdTokenClaims()).__raw;
 
-      await  this.apiservice.deleteTweet(Token, tweetItem.tweetId);
+      await  this.apiservice.deleteTweet(Token, tweetItem.tweetId).then(() => {
+        this.presentToast('Delete Successfull');
+      });
 
 
     });

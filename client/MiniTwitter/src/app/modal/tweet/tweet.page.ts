@@ -59,6 +59,7 @@ export class TweetPage implements OnInit {
       try {
 
         this.auth.auth0Client$.subscribe(async data => {
+          this.presentToast('Uploading data to cloud...........Please Wait');
           const idToken = await (await data.getIdTokenClaims()).__raw;
           const response = await this.apiservice.getUploadUrl(idToken);
           const uplodUrl = response.uploadUrl;
