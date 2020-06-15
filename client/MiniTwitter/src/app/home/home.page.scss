@@ -1,6 +1,6 @@
 .tweet {
   margin: 0 auto;
-  bottom:50px;
+  top:50px;
   position: absolute;
   left: 40%;
   right: 40%;
@@ -9,7 +9,7 @@
 
 
 ion-img {
-  height: 350px;
+  height: 300px;
   margin: 0;
 }
 
@@ -23,6 +23,14 @@ ion-icon {
 width: 30px;
 height: 30px;
 color: grey;
+}
+
+ion-fab {
+  margin-right: 70px;
+}
+
+.twticon {
+  color: white;
 }
 
 .twtItem {
@@ -39,14 +47,6 @@ color: grey;
 .twet {
   text-align: center;
   font-size: x-large;
-  margin: 30px;
+  margin: 10px;
 }
 
-ion-card {
-  top: 10px;
-  bottom: 50px;
-  width: 40%;
-  height: 90%;
-  margin: 0 auto;
-
-}
