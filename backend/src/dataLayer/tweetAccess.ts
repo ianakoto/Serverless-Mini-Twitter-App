@@ -70,9 +70,12 @@ export class TweetAccess {
             "userId": userId,
             "tweetId": tweetId
             },
-            UpdateExpression: "set like=:like",
+            UpdateExpression: "set #newlike=:vall",
+            ExpressionAttributeNames:{
+                "#newlike": "like"
+              },
             ExpressionAttributeValues:{
-                ":like":addLike.like
+                ":vall":addLike.like
             },
             ReturnValues:"UPDATED_NEW"
         };
@@ -110,12 +113,12 @@ export class TweetAccess {
 
 
 
-    async deleteUserTweet(userId:string, todoId: string) {
+    async deleteUserTweet(userId:string, tweetId: string) {
         var params = {
             TableName: this.tweetTable,
             Key:{
             "userId": userId,
-            "todoId": todoId
+            "tweetId": tweetId
             }
         };
         

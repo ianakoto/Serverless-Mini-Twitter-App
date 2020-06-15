@@ -125,9 +125,10 @@ export class HomePage implements OnInit {
     this.auth.auth0Client$.subscribe (async client => {
 
       const Token =  await (await client.getIdTokenClaims()).__raw;
+      const twetby = `retweeted by ${tweet.tweethandler}`;
       const retwet: CreateTweetRequest = {
         comment: tweet.comment,
-        tweethandler: tweet.tweethandler,
+        tweethandler: twetby,
         attachmentUrl: tweet.attachmentUrl
       };
       await  this.apiservice.reTweet(Token, retwet);
@@ -138,6 +139,7 @@ export class HomePage implements OnInit {
 
 
   addLike(tweetItem: Tweet) {
+    console.log(tweetItem);
 
     this.auth.auth0Client$.subscribe (async client => {
 
@@ -157,13 +159,14 @@ export class HomePage implements OnInit {
 
 
 
-  deleteTweet(tweetId) {
+  deleteTweet(tweetItem: Tweet) {
+    console.log(tweetItem);
 
     this.auth.auth0Client$.subscribe (async client => {
 
       const Token =  await (await client.getIdTokenClaims()).__raw;
 
-      await  this.apiservice.deleteTweet(Token, tweetId);
+      await  this.apiservice.deleteTweet(Token, tweetItem.tweetId);
 
 
     });
