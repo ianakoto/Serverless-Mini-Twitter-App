@@ -1,7 +1,7 @@
 <app-nav-bar></app-nav-bar>
 
 <ion-content>
-  
+
 <ion-list *ngIf="auth.loggedIn">
   <ion-item *ngFor="let item of data$">
     <ion-grid>
@@ -9,11 +9,11 @@
       <ion-card-title>{{item.tweethandler}}</ion-card-title> 
       <ion-card-subtitle>{{item.createdAt}}</ion-card-subtitle>
       <ion-col>
-        <ion-img src="{{item.attachmentUrl}"></ion-img>
+        <ion-img src="{{item.attachmentUrl}}"></ion-img>
         <ion-label class="twet">{{item.comment}}</ion-label>
       </ion-col>
 
-      <ion-grid *ngIf="item.commentList">
+      <ion-grid *ngIf="item.commentList !== []">
         <ion-card-header>Comments</ion-card-header>
         <ion-list class="commentLst">
           <ion-item *ngFor="let cmt of item.commentList">

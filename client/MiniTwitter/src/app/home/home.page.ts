@@ -5,7 +5,6 @@ import { TweetPage } from '../modal/tweet/tweet.page';
 import { ApiService } from '../services/api.service';
 import { Observable } from 'rxjs';
 import { Tweet } from '../type/Tweet';
-import { TweetsService } from '../services/tweets.service';
 import { UpdateTweet } from '../type/UpdateTweet';
 import { CreateTweetRequest } from '../type/CreateTweetRequest';
 import { AlertController } from '@ionic/angular';
