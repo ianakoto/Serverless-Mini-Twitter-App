@@ -97,9 +97,9 @@ export class TweetAccess {
             "userId": userId,
             "tweetId": tweetId
             },
-            UpdateExpression: "add comment =:comment",
+            UpdateExpression: "set commentList = list_append(commentList, :vals)",
             ExpressionAttributeValues:{
-                ":comment": comment
+                ":vals": [comment]  
             },
             ReturnValues:"UPDATED_NEW"
         };

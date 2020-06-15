@@ -39,7 +39,7 @@ export class ApiService {
   async addComment(idToken: string, tweetId: string, comment: CommentUpdate ): Promise<Tweet[]> {
     console.log('Add Comment');
 
-    const response = await Axios.get(`${apiEndpoint}/tweets/${tweetId}`, {
+    const response = await Axios.patch(`${apiEndpoint}/tweets/${tweetId}`, comment, {
       headers: {
         'Content-Type': 'application/json',
          Authorization: `Bearer ${idToken}`

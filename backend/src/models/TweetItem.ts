@@ -1,3 +1,4 @@
+import { CommentUpdate } from "./CommentUpdate";
 
 
 export interface TweetItem {
@@ -5,7 +6,8 @@ export interface TweetItem {
     userId: string
     createdAt: string
     like?: number
-    comment?: string
+    comment?: string,
+    commentList?: Array<CommentUpdate>,
     tweethandler: string
     attachmentUrl?: string
 }

@@ -108,10 +108,11 @@ export class HomePage implements OnInit {
     this.auth.auth0Client$.subscribe (async client => {
 
       const Token =  await (await client.getIdTokenClaims()).__raw;
-
+      const crtat =  new Date().toISOString();
       const rcomment: CommentUpdate = {
         comment: usercomment,
-        tweethandler: handler
+        tweethandler: handler,
+        createdAt: crtat
       };
       await  this.apiservice.addComment(Token, tweetId, rcomment);
 

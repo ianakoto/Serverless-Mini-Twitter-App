@@ -30,7 +30,8 @@ export async function createUserTweet(event:APIGatewayProxyEvent): Promise<Tweet
     const addTweet = {
         userId: userId,
         tweetId: tweetId,
-        createdAt:createdAt,
+        createdAt: createdAt,
+        commentList: [],
         like:0,
         ...requestTweet
     } as TweetItem
@@ -54,6 +55,7 @@ export async function reTweet(event:APIGatewayProxyEvent): Promise<TweetItem> {
         userId: userId,
         tweetId: tweetId,
         createdAt:createdAt,
+        commentList: [],
         ...reTweetItem
     } as TweetItem
 
