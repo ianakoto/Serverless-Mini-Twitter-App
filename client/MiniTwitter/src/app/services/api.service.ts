@@ -24,16 +24,23 @@ export class ApiService {
 
 
   async getTweet(idToken: string): Promise<Tweet[]> {
-    console.log('Fetching Tweet');
+    try {
+      const response = await Axios.get(`${apiEndpoint}/tweets/user`, {
+        headers: {
+          'Content-Type': 'application/json',
+           Authorization: `Bearer ${idToken}`
+        },
+      });
+      if ( response.data.items != null) {
+        console.log('Fetching Tweet');
+      }
+      console.log('Tweet:', response.data);
+      return   response.data.items;
+    } catch (error) {
+      return null;
+    }
 
-    const response = await Axios.get(`${apiEndpoint}/tweets/user`, {
-      headers: {
-        'Content-Type': 'application/json',
-         Authorization: `Bearer ${idToken}`
-      },
-    });
-    console.log('Tweet:', response.data);
-    return response.data.items;
+
   }
 
   async addComment(idToken: string, tweetId: string, comment: CommentUpdate ): Promise<Tweet[]> {
