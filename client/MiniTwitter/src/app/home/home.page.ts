@@ -110,8 +110,8 @@ export class HomePage implements OnInit {
       component: TweetPage
     });
     modal.onDidDismiss().then( dt => {
-      console.log(this.isTweetSent);
-      if ( dt) {
+      console.log('www', dt.data);
+      if ( dt.data !== null ) {
         this.getTweet();
       }
 

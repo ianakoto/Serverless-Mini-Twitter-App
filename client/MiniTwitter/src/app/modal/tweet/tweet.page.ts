@@ -15,7 +15,7 @@ export class TweetPage implements OnInit {
   imgurl;
   comment;
 
-  public ontweetsend = false;
+  ontweetsend = false;
   constructor(private modalController: ModalController,
               public toastController: ToastController,
               private apiservice: ApiService,
@@ -45,15 +45,12 @@ export class TweetPage implements OnInit {
 
 
   async closeModal() {
-    const senddata =  this.ontweetsend;
-
-
-    await this.modalController.dismiss({data: senddata});
+    await this.modalController.dismiss();
   }
 
 
   async sendTweet() {
-
+    this.ontweetsend = true;
     if (!this.comment || !this.imgurl) {
       this.presentToast('Failed to send Tweet. Make sure the field are not empty');
     }else{
@@ -62,7 +59,7 @@ export class TweetPage implements OnInit {
       try {
 
         this.auth.auth0Client$.subscribe(async data => {
-          this.presentToast('Uploading data to cloud...........Please Wait, dont close it');
+          this.presentToast('Uploading data to cloud...........Please Wait');
           const idToken = await (await data.getIdTokenClaims()).__raw;
           const response = await this.apiservice.getUploadUrl(idToken);
           const uplodUrl = response.uploadUrl;
@@ -76,8 +73,8 @@ export class TweetPage implements OnInit {
             attachmentUrl: imageUrl
            };
           this.apiservice.createTweet(idToken, newTweek).then(async () => {
-          this.ontweetsend = true;
-          const senddata =  this.ontweetsend;
+          this.ontweetsend = false;
+          const senddata =  true;
 
           await this.modalController.dismiss({data: senddata});
           this.presentToast('Tweet Sent successfully');
@@ -90,8 +87,8 @@ export class TweetPage implements OnInit {
 
 
       } catch (error) {
-        const senddata =  this.ontweetsend;
-        await this.modalController.dismiss({data: senddata});
+
+        await this.modalController.dismiss();
         this.presentToast('Failed to send Tweet.');
       }
 
