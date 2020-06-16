@@ -40,10 +40,10 @@ It should return data that looks like this:
       "like": 3,
       "comment": "Not good",
       "commentList": [
-      "0": {"comment":"This is great",
+       {"comment":"This is great",
             "tweethandler": @ken,
             "createdAt": "2019-05-27T20:01:45.424Z"
-           }
+       }
       ],
       "userId": 34555,
       "tweethandler": "@somebody",
@@ -55,10 +55,10 @@ It should return data that looks like this:
       "like": 0,
       "comment": "it is cool",
       "commentList": [
-      "0": {"comment":"This is great",
+      {"comment":"This is great",
             "tweethandler": @ken,
             "createdAt": "2019-05-27T20:01:45.424Z"
-           }
+       }
       ],      
       "userId": 5564,
       "tweethandler": "@nobody",
@@ -132,7 +132,7 @@ It receives a new Tweet comments to be added in JSON format that looks like this
 ```json
 {
  "comment":"This is great",
- "tweethandler": @ken,
+ "tweethandler": "@ken",
  "createdAt": "2019-05-27T20:01:45.424Z"
 }
 
@@ -172,7 +172,7 @@ It receives a the coppied Tweet data to be added in JSON format that looks like 
 ```json
 {
  "comment":"This is great",
- "tweethandler": @ken,
+ "tweethandler": "@ken",
  "attachmentUrl":  "http://example.com/image.png"
 }
 
@@ -202,7 +202,7 @@ It should return a JSON object that looks like this:
 
 ```json
 {
-  "uploadUrl": "https://s3-bucket-name.s3.eu-west-2.amazonaws.com/image.png"
+  "uploadUrl": "https://s3-bucket-name.s3.eu-west-2.amazonaws.com/image.png",
   "imageUrl": "https://s3-bucket-name.s3.eu-west-2.amazonaws.com/ffh4544334icvmir5y5t3lkrdlvdlgfh54r3fm"
 }
 ```
