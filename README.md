@@ -340,7 +340,7 @@ To run a client application first edit the `client/MiniTweet/src/config.ts` file
 ```
 cd client/MiniTweet
 npm install
-npm run start
+ionic serve --port 3000
 ```
 
 This should start a development server with the Ionic application that will interact with the serverless Tweeter application.
