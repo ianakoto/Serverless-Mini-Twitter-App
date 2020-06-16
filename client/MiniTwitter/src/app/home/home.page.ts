@@ -20,6 +20,7 @@ export class HomePage implements OnInit {
 
   handler;
   data$;
+  isTweetSent = false;
   constructor(public auth: AuthService,
               private modalController: ModalController,
               public toastController: ToastController,
@@ -65,7 +66,7 @@ export class HomePage implements OnInit {
 
       }
     });
-   }
+  }
 
    async presentCommentAlert(tweetItem: Tweet) {
     const alert = await this.alertController.create({
@@ -108,6 +109,15 @@ export class HomePage implements OnInit {
     const modal = await this.modalController.create({
       component: TweetPage
     });
+    modal.onDidDismiss().then( dt => {
+      console.log(this.isTweetSent);
+      if ( dt) {
+        this.getTweet();
+      }
+
+    });
+
+
     return await modal.present();
   }
 
@@ -123,7 +133,9 @@ export class HomePage implements OnInit {
         createdAt: crtat
       };
       await  this.apiservice.addComment(Token, tweetId, rcomment).then( () => {
+        this.getTweet();
         this.presentToast('Comment added');
+
       });
 
 
@@ -143,6 +155,7 @@ export class HomePage implements OnInit {
         attachmentUrl: tweet.attachmentUrl
       };
       await  this.apiservice.reTweet(Token, retwet).then(() => {
+        this.getTweet();
         this.presentToast('item retweet complete');
       } );
 
@@ -161,7 +174,9 @@ export class HomePage implements OnInit {
       const update: UpdateTweet = {
         like: setLike
       };
-      await  this.apiservice.patchTweet(Token, tweetItem.tweetId, update);
+      await  this.apiservice.patchTweet(Token, tweetItem.tweetId, update).then( () => {
+        this.getTweet();
+      });
 
 
     });
@@ -180,6 +195,7 @@ export class HomePage implements OnInit {
       const Token =  await (await client.getIdTokenClaims()).__raw;
 
       await  this.apiservice.deleteTweet(Token, tweetItem.tweetId).then(() => {
+        this.getTweet();
         this.presentToast('Delete Successfull');
       });
 
