@@ -1,10 +1,10 @@
 # Serverless Mini Twitter App
-This is a serverless application to mimic the basic functionality of the popular twitter app. The application lets you sign up as a user to post images, like images, add tags to images and follow other users to recieve their feed.
+This is a serverless application to mimic the basic functionality of the popular twitter app. The application lets you sign up as a user to post images with comment as a user tweet, like tweets, retweet, add comment to tweet and delete a tweet.
 
 
 # Functionality of the application
 
-This application will allow creating/removing/updating/fetching/follow Tweet items. Each Tweet item can optionally have an attachment image and a comment. Each user only has access to Tweet items that he/she has created but can recieved Tweet items from other users if that user follows other users. Each user can Like, Comment on Tweet items from followed users. Users can also retweet a post from other users or from the same user.
+This application will allow creating/removing/updating/fetching Tweet items. Each Tweet item can  have an attachment image and a comment. Each user only has access to Tweet items that he/she has created. Each user can Like, Comment on Tweet items. Users can also retweet a posted tweet.
 
 # Tweet items
 
@@ -13,9 +13,10 @@ The application should store Tweet items, and each Tweet item contains the follo
 * `tweetId` (string) - a unique id for a tweet item
 * `createdAt` (string) - date and time when an item was created
 * `like` (int) - number indicating the likes of a tweet ( zero by default)
-* `comment` (dict)? - Tweet comments on posted tweets
+* `comment` (string)? - comment added to tweet in tweet creation
+* `commentList` (Array) - list of comments on already posted tweet
 * `userId` (string) - the user id for posting the tweet 
-* `tweethandler` (string) - the user for posting the tweet (e.g. @name )
+* `tweethandler` (string) - the user for posting the tweet. (e.g. @name )
 * `attachmentUrl` (string) (optional) - a URL pointing to a thumbnail image attached to a Tweet item
 
 
@@ -37,10 +38,13 @@ It should return data that looks like this:
       "tweetId": "123",
       "createdAt": "2019-07-27T20:01:45.424Z",
       "like": 3,
-      "comment": {"comment":"This is great",
-                  "tweethandler": @ken,
-                  "createdAt": "2019-05-27T20:01:45.424Z"
-                  },
+      "comment": "Not good",
+      "commentList": [
+      "0": {"comment":"This is great",
+            "tweethandler": @ken,
+            "createdAt": "2019-05-27T20:01:45.424Z"
+           }
+      ],
       "userId": 34555,
       "tweethandler": "@somebody",
       "attachmentUrl": "http://example.com/image.png"
@@ -49,10 +53,13 @@ It should return data that looks like this:
       "tweetId": "453",
       "createdAt": "2019-05-27T20:01:45.424Z",
       "like": 0,
-      "comment": {"comment":"This is fake. don't believe",
+      "comment": "it is cool",
+      "commentList": [
+      "0": {"comment":"This is great",
             "tweethandler": @ken,
             "createdAt": "2019-05-27T20:01:45.424Z"
-            },
+           }
+      ],      
       "userId": 5564,
       "tweethandler": "@nobody",
       "attachmentUrl": "http://example.com/image.png"
@@ -69,10 +76,8 @@ It receives a new Tweet item to be created in JSON format that looks like this:
 {
   "createdAt": "2019-05-27T20:01:45.424Z",
   "like": 0,
-  "comment": {"comment":"This is great",
-              "tweethandler": @ken,
-              "createdAt": "2019-05-27T20:01:45.424Z"
-              },
+  "comment": "new tweet",
+  "commentList": [],
   "userId": 5564,
   "tweethandler": "@nobody",
   "attachmentUrl": "http://example.com/image.png"
@@ -86,10 +91,8 @@ It should return a new Tweet item that looks like this:
   "item": {
    "createdAt": "2019-05-27T20:01:45.424Z",
    "like": 0,
-  "comment": {"comment":"This is great",
-              "tweethandler": @ken,
-              "createdAt": "2019-05-27T20:01:45.424Z"
-              },
+   "comment": "new tweet",
+   "commentList": [],
    "userId": 5564,
    "tweethandler": "@nobody',
    "attachmentUrl": "http://example.com/image.png"
@@ -103,7 +106,13 @@ It receives an object that contains one field that can be updated in a Tweet ite
 
 ```json
 {
+  "createdAt": "2019-05-27T20:01:45.424Z",
   "like": 7,
+  "comment": "new tweet",
+  "commentList": [],
+  "userId": 5564,
+  "tweethandler": "@nobody",
+  "attachmentUrl": "http://example.com/image.png"
 }
 ```
 
@@ -134,7 +143,8 @@ it should return tweet item with added comments that looks like thus
 {
   "createdAt": "2019-05-27T20:01:45.424Z",
   "like": 0,
-  "comment": items{
+  "comment": "nice picture",
+  "commentList": [
                      {
                       "comment":"This is great",
                       "tweethandler": @ken,
@@ -145,7 +155,7 @@ it should return tweet item with added comments that looks like thus
                       "tweethandler": @Okra,
                       "createdAt": "2019-05-27T20:01:45.424Z"
                       }
-                  },
+                  ],
   "userId": 5564,
   "tweethandler": "@nobody",
   "attachmentUrl": "http://example.com/image.png"
@@ -154,13 +164,46 @@ it should return tweet item with added comments that looks like thus
 ```
 
 
-* `GenerateUploadUrl` - returns a pre-signed URL that can be used to upload an attachment file for a Tweet item.
+* `Retweet` - should copy the tweet data of the chosen tweet and repost the tweet.
+
+
+It receives a the coppied Tweet data to be added in JSON format that looks like this:
+
+```json
+{
+ "comment":"This is great",
+ "tweethandler": @ken,
+ "attachmentUrl":  "http://example.com/image.png"
+}
+
+```
+it should return tweet item with copied tweet info  that looks like this 
+
+```
+{
+  "createdAt": "2019-05-27T20:01:45.424Z",
+  "like": 0,
+  "comment":"This is great",
+  "commentList":[],
+  "userId": 5564,
+  "tweethandler": "retweeted by @nobody",
+  "attachmentUrl": "http://example.com/image.png"
+}
+
+```
+
+
+
+
+
+* `GenerateUploadUrl` - returns a pre-signed URL that can be used to upload an attachment file for a Tweet item and a url to fetch from s3.
 
 It should return a JSON object that looks like this:
 
 ```json
 {
   "uploadUrl": "https://s3-bucket-name.s3.eu-west-2.amazonaws.com/image.png"
+  "imageUrl": "https://s3-bucket-name.s3.eu-west-2.amazonaws.com/ffh4544334icvmir5y5t3lkrdlvdlgfh54r3fm"
 }
 ```
 
@@ -173,16 +216,20 @@ You also need to add any necessary resources to the `resources` section of the `
 
 # Frontend
 
-The `client` folder contains a web application that can use the API that should be developed in the project.
+The `client\MiniTwiter` folder contains a web application that can use the API that should be developed in the project.
 
 
 ## Authentication
 
+To implement authentication in your application, you would have to create an Auth0 application and copy "domain" and "client id" to the config.ts file in the client folder. We recommend using asymmetrically encrypted JWT tokens.
 
 
 # Best practices
 
+## Vendor Lock-in
+Fears of cloud vendor lock-in stem from a number of places. First, it's the loss of control over the data and infrastructure that power business' applications. Not having complete control over aspects like security, uptime, and overall infrastructure management can be a scary thing.
 
+The serverless project was built inside a business model with datalayers to enable easy shift to other cloud providers in the future.
 
 ## Logging
 
@@ -199,8 +246,6 @@ logger.info('User was authorized', {
   key: 'value'
 })
 ```
-
-
 
 
 # DynamoDB
@@ -253,6 +298,27 @@ await this.dynamoDBClient
   .promise()
 ```
 
+
+To add an item to a list use, the `update()` method looks like:
+
+```ts
+await this.dynamoDBClient
+  .update({
+    TableName: 'table-name',
+    Key:{
+            "keyOne": valOne,
+            "KeyTwo": valTwo
+         },
+    UpdateExpression: 'set someList = list_append(someList, :vals)',
+    ExpressionAttributeValues: {
+      ':vals': newList
+    }
+  })
+  .promise()
+ ```
+
+
+
 # How to run the application
 
 ## Backend
@@ -267,10 +333,10 @@ sls deploy -v
 
 ## Frontend
 
-To run a client application first edit the `client/src/config.ts` file to set correct parameters. And then run the following commands:
+To run a client application first edit the `client/MiniTweet/src/config.ts` file to set correct parameters. And then run the following commands:
 
 ```
-cd client
+cd client/MiniTweet
 npm install
 npm run start
 ```
