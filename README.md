@@ -41,7 +41,7 @@ It should return data that looks like this:
       "comment": "Not good",
       "commentList": [
        {"comment":"This is great",
-            "tweethandler": @ken,
+            "tweethandler": "@ken",
             "createdAt": "2019-05-27T20:01:45.424Z"
        }
       ],
@@ -56,7 +56,7 @@ It should return data that looks like this:
       "comment": "it is cool",
       "commentList": [
       {"comment":"This is great",
-            "tweethandler": @ken,
+            "tweethandler": "@ken",
             "createdAt": "2019-05-27T20:01:45.424Z"
        }
       ],      
@@ -94,7 +94,7 @@ It should return a new Tweet item that looks like this:
    "comment": "new tweet",
    "commentList": [],
    "userId": 5564,
-   "tweethandler": "@nobody',
+   "tweethandler": "@nobody",
    "attachmentUrl": "http://example.com/image.png"
   }
 }
