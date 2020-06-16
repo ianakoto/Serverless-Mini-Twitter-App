@@ -221,7 +221,9 @@ The `client\MiniTwiter` folder contains a web application that can use the API t
 
 ## Authentication
 
-To implement authentication in your application, you would have to create an Auth0 application and copy "domain" and "client id" to the config.ts file in the client folder. We recommend using asymmetrically encrypted JWT tokens.
+To implement authentication in your application, you would have to create an Auth0 application and copy "domain" and "client id" to the config.ts file in the client/MiniTwitter folder. We recommend using asymmetrically encrypted JWT tokens.
+
+Also, Provide a URL that can be used to download a certificate that can be used to verify JWT token signature. this should be done in the backend\src\lambda\auth\auth0Authorizer.ts 
 
 
 # Best practices
