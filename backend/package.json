@@ -6,7 +6,7 @@
   "dependencies": {
     "@types/aws-lambda": "^8.10.17",
     "@types/node": "^10.12.18",
-    "aws-sdk": "^2.695.0",
+    "aws-sdk": "^2.814.0",
     "aws-xray-sdk": "^3.1.0",
     "fork-ts-checker-webpack-plugin": "^3.0.1",
     "jsonwebtoken": "^8.5.1",
@@ -28,7 +28,7 @@
     "@types/aws-lambda": "^8.10.17",
     "@types/jsonwebtoken": "^8.3.2",
     "@types/node": "^10.14.4",
-    "aws-sdk": "^2.433.0",
+    "aws-sdk": "^2.814.0",
     "serverless-aws-documentation": "^1.1.0",
     "serverless-iam-roles-per-function": "^1.0.4",
     "serverless-plugin-canary-deployments": "^0.4.7",
